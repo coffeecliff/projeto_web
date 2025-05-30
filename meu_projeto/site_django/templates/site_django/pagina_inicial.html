@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'site_django/css/style.css' %}">
+    <script src="{% static 'site_django/js/script.js' %}"></script>
+    
+    <title>Jelly Cubes Games</title>
+    <!-- <link rel="stylesheet" href="css/jellycubes_cssarchive.css"> Referência ao CSS externo -->
+</head>
+<header>
+    <div class="logo">
+        <img src="{% static 'site_django/imagens/jellycubeslogo.png' %}" alt="logo" class="overlay-img">
+    </div>
+    <div class="search-container">
+        <div class="header-background">
+            <img src="{% static 'site_django/imagens/head.png' %}" alt="Imagem de fundo">
+        </div>
+        
+
+        <div id="category-title" class="selected-category">TODOS OS JOGOS</div>
+
+        <button id="scrollToTopBtn" class="scroll-to-top">&#8679;</button>
+
+        
+
+        <div class="game-news-carousel">
+            <div class="carousel-container">
+                <div class="carousel">
+                    <img src="{% static 'site_django/imagens/news/game_news1.png' %}" class="carousel-img">
+                    <img src="{% static 'site_django/imagens/news/game_news2.png' %}" class="carousel-img">
+                    <img src="{% static 'site_django/imagens/news/game_news3.png' %}" class="carousel-img">
+                </div>
+            </div>
+        </div>
+
+        <div class="user-icon">
+            <button class="icon-button" id="userIcon">
+                <img class="overlay-img" src="{% static 'site_django/imagens/usericon.png' %}" alt="User Icon">
+            </button>
+        </div>
+
+        <!-- CAMADA ESCURA DO FUNDO -->
+<div id="popupOverlay" class="popup" style="display: none;">
+    <!-- CAIXA COM AS OPÇÕES LOGIN OU CADASTRO -->
+    <div class="popup-content" id="optionPopup">
+        <button class="close-btn" onclick="closePopup()">&times;</button>
+        <h2 style="color: #ff8c42;">Entrar como:</h2>
+        <button class="login-btn" onclick="showLoginForm()">Login</button>
+        <button class="login-btn" onclick="showRegisterForm()">Cadastro</button>
+    </div>
+
+    <!-- FORMULÁRIO DE LOGIN -->
+    <div class="popup-content" id="loginForm" style="display: none;">
+        <button class="close-btn" onclick="closePopup()">&times;</button>
+        <h2 style="color: #ff8c42;">Login</h2>
+        <form method="post" action="/projeto/">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="E-mail" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit" class="login-btn">Entrar</button>
+        </form>
+        
+        <!-- TEXTO COM LINK PARA CADASTRO -->
+        <p style="margin-top: 20px; font-size: 0.95rem; color: #767676;">
+            Ainda não tem uma conta?
+            <a href="#" onclick="showRegisterForm()" style="color: #ff8c42; font-weight: bold; text-decoration: none;">Cadastre-se</a>
+        </p>
+    </div>
+
+    <!-- FORMULÁRIO DE CADASTRO -->
+    <div class="popup-content" id="registerForm" style="display: none;">
+        <button class="close-btn" onclick="closePopup()">&times;</button>
+        <h2 style="color: white;">Cadastro</h2>
+        <form method="post" action="/projeto/">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Nome completo" required>
+            <input type="email" name="email" placeholder="E-mail" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit" class="login-btn">Cadastrar</button>
+        </form>
+
+        <p style="margin-top: 20px; font-size: 0.9rem; color: #767676;">
+            Já tem uma conta?
+            <a href="javascript:void(0);" onclick="showLoginForm()" style="color: #ff8c42; font-weight: bold; text-decoration: none;">Login</a>
+        </p>
+    </div>
+</div>
+
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Procura algo..?" onkeyup="searchGames()">
+        </div>
+    </div>
+</header>
+<body>
+
+
+    {% if sucesso %}
+    <div id="mensagem-sucesso" class="mensagem-popup" style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ff6200;
+        font-size: 72px;
+        font-weight: bold;
+        text-align: center;
+        background-color: #88c399ab; /* fundo opcional para contraste */
+        padding: 20px 40px;
+        border-radius: 4px;
+        z-index: 9999;
+    ">         
+        SUCESSO!! 🥳
+    </div>     
+    {% endif %}
+
+
+    {% if usuario_logado_nome %}
+    <div id="mensagem-bemvindo" class="mensagem-popup" style="
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #507050c5;
+    padding: 20px 40px;
+    border-radius: 6px;">Bem-vindo, {{ usuario_logado_nome }} 👋</div>
+
+    {% elif sucesso %}
+    <div id="mensagem-sucesso" class="mensagem-popup" style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ff6200;
+        font-size: 72px;
+        font-weight: bold;
+        text-align: center;
+        background-color: #88c399ab;
+        padding: 20px 40px;
+        border-radius: 4px;
+        z-index: 9999;
+    ">
+        SUCESSO!! 🥳
+    </div>
+    {% endif %}
+
+    {% if erro_login %}
+    <div id="mensagem-erro" class="mensagem-popup" style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: red;
+        font-size: 48px;
+        font-weight: bold;
+        text-align: center;
+        background-color: #000000a8;
+        padding: 20px 40px;
+        border-radius: 4px;
+        z-index: 9999;
+    ">
+        E-mail ou senha inválidos 😞
+    </div>
+    {% endif %}
+
+    <div class="container">
+        <div class="sidebar">
+            <h3>CATEGORIAS</h3>
+            <button data-category="TODOS OS JOGOS">- TODOS OS JOGOS -</button>
+            <button data-category="AÇÃO">- 🔫 AÇÃO -</button>
+            <button data-category="AVENTURA">- 🏃‍♂️ AVENTURA -</button>
+            <button data-category="SANDBOX">- 📦 SANDBOX -</button>
+            <button data-category="3D">- 🧊 3D -</button>
+            <button data-category="2D">- ⛳ 2D -</button>
+            <button data-category="ESPORTES">- 🏈 ESPORTES -</button>
+            <button data-category="MENINAS">- 🙋🏻‍♀️ MENINAS -</button>
+            <button data-category="CORRIDA">- 🏁 CORRIDA -</button>
+        </div>
+    
+        <div class="main-content">
+            <div class="games-grid" id="games-container">
+                {% for jogo in jogos %}
+                <div class="game-item" data-category="{{ jogo.categoria }}">
+                    <img src="{{ jogo.imagem.url }}" alt="{{ jogo.nome }}" class="background-img">
+                    <div class="game-title">{{ jogo.nome }}</div>
+                    <p class="game-description-popup" style="display:none;">{{ jogo.descricao }}</p>
+                    <a href="https://www.tronelo.com.br/" target="_blank" class="game-button">Jogar Agora</a>
+                </div>
+                {% endfor %}
+            </div>
+    
+            <!-- Esta é a mensagem usada apenas pelo JavaScript -->
+            <p id="no-results" style="display: none;">Nenhum resultado encontrado.</p>
+        </div>
+    </div>    
+</body>       
+
+
+<!-- RODAPÉ COM ÍCONES SOCIAIS -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="contact-info">
+            <p><strong>Telefone:</strong> (11) 1234-5678</p>
+            <p><strong>Email:</strong> <a href="mailto:seuemail@email.com">jellycubes@gmail.com</a></p>
+        </div>
+
+        <div class="social-media">
+            <a href="https://instagram.com/pedro_08_" target="_blank" title="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#88c399"><!-- Mudando a cor para branco -->
+                    <path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm10 2H7a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3zm-5 3a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zm5.5-2.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                </svg>
+            </a>
+            <a href="https://twitter.com/mikufan5342" target="_blank" title="Twitter">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#88c399">
+                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0016.85 3c-2.63 0-4.72 2.24-4.72 5 0 .39.04.77.12 1.14A13.2 13.2 0 013 4.64a4.94 4.94 0 00-.64 2.51 5 5 0 002.2 4.16 4.24 4.24 0 01-2.16-.6v.06c0 2.39 1.59 4.37 3.7 4.82-.39.11-.8.16-1.22.16-.3 0-.59-.03-.87-.08a4.78 4.78 0 004.41 3.42A9.05 9.05 0 012 19.8a12.79 12.79 0 007 2.2c8.3 0 12.9-7 12.9-13.1l-.01-.6A9.2 9.2 0 0023 3z"/>
+                </svg>
+            </a>
+            <a href="mailto:seuemail@email.com" title="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#88c399">
+                    <path d="M3 4h18c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 2v.01L12 13l9-7V6H3zm0 12h18V9l-9 7-9-7v9z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</footer>
+</html>

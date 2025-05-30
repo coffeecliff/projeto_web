@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'site_django2/css/style.css' %}">
+    <script src="{% static 'site_django2/js/script.js' %}"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/script.js"></script>
+    
+    <div class="user-icon">
+        <button class="icon-button" id="userIcon">
+            <img class="overlay-img" src="{% static 'site_django2/imagens/campo_de_login.png' %}" alt="User Icon">
+        </button>
+    </div>
+
+</head>
+<body>
+    <div class="header">FREDERIK GAMES</div>
+    
+    <div class="sidebar">
+        <img src="{% static 'site_django2/imagens/logo de frederik.png' %}" alt="Frederik Games">
+        <button>INÍCIO</button>
+        <button>EM ALTA</button>
+        <button>OFERTAS</button>
+        <button>CONTA</button>
+        <button>AMIGOS</button>
+        <button>ATIVIDADE</button>
+        <button>MEUS JOGOS</button>
+    </div>
+
+    <!-- Botões de categoria -->
+    <div class="category-buttons">
+        <button onclick="filterGames('all')">Todos</button>
+        <button onclick="filterGames('acao')">Ação</button>
+        <button onclick="filterGames('esportes')">Esportes</button>
+        <button onclick="filterGames('corrida')">Corrida</button>
+        <button onclick="filterGames('arcade')">Arcade</button>
+    </div>
+
+    <div class="game-grid">
+        <div class="game" data-category="acao">
+            <button class="game-button" onclick="selecionarJogo('Resident Good 4')">
+                <img src="{% static 'site_django2/imagens/resident_good4.png' %}" alt="Resident Good 4" class="background-img">
+                <p>Resident Good 4</p>
+            </button>
+        </div>
+        <div class="game" data-category="arcade" >
+            <button class="game-button" onclick="selecionarJogo('Fatal Combat 12')">
+                <img src="{% static 'site_django2/imagens/fatal_combat12.png' %}" alt="Fatal Combat 12" class="background-img">
+                <p>Fatal Combat 12</p>
+            </button>
+        </div>
+        <div class="game" data-category="acao">
+            <button class="game-button" onclick="selecionarJogo('Bad at War 3')">
+                <img src="{% static 'site_django2/imagens/bad_at_war3.png' %}" alt="Bad at War 3" class="background-img">
+                <p>Bad at War 3</p>
+            </button>
+        </div>
+        <div class="game" data-category="acao">
+            <button class="game-button" onclick="selecionarJogo('The First of Us')">
+                <img src="{% static 'site_django2/imagens/the_first_of_us.png' %}" alt="The First of Us" class="background-img">
+                <p>The First of Us: Part I</p>
+            </button>
+        </div>
+        <div class="game" data-category="acao">
+            <button class="game-button" onclick="selecionarJogo('Grend Thoft Auto VI')">
+                <img src="{% static 'site_django2/imagens/gta.png' %}" alt="Grend Thoft Auto VI" class="background-img">
+                <p>Grend Thoft Auto VI</p>
+            </button>
+        </div>
+        <div class="game" data-category="acao">
+            <button class="game-button" onclick="selecionarJogo('CS Gone')">
+                <img src="{% static 'site_django2/imagens/cs_gone.png' %}" alt="CS GONE" class="background-img">
+                <p>CS GONE</p>
+            </button>
+        </div>
+        <div class="game" data-category="esportes">
+            <button class="game-button" onclick="selecionarJogo('PRO Futbol 25')">
+                <img src="{% static 'site_django2/imagens/pro_futbol25.png' %}" alt="PRO Futbol 25" class="background-img">
+                <p>PRO Futbol 25</p>
+            </button>
+        </div>
+        <div class="game" data-category="corrida">
+            <button class="game-button" onclick="selecionarJogo('Need For Slow')">
+                <img src="{% static 'site_django2/imagens/need_for_slow.png' %}" alt="Need for Slow" class="background-img">
+                <p>Need for Slow</p>
+            </button>
+        </div>
+        <div class="game" data-category="arcade">
+            <button class="game-button" onclick="selecionarJogo('Sônico')">
+                <img src="{% static 'site_django2/imagens/sônico.png' %}" alt="Need for Slow" class="background-img">
+                <p>Sônico</p>
+            </button>
+        </div>
+        
+    </div>
+    
+    <div class="header">
+        <span>FREDERIK GAMES</span>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-bar" placeholder="Pesquisar jogos...">
+            <button class="search-button" onclick="searchGames()">Buscar</button>
+        </div>
+    </div>
+    
+
+    <div id="loginPopup" class="popup">
+        <div class="popup-content">
+            <button class="close-btn">&times;</button>
+            <h2>Login</h2>
+    
+            <form method="post" action="/projeto/">
+                {% csrf_token %}
+    
+                <label for="email">E-mail:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+    
+                <label for="password">Senha:</label><br>
+                <input type="password" id="password" name="password" required><br><br>
+    
+                <button type="submit" class="login-btn">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+    
+<script>src="js/script.js"</script>
+
+</body>
+</html>
