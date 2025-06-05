@@ -48,7 +48,7 @@
     <!-- CAIXA COM AS OPÇÕES LOGIN OU CADASTRO -->
     <div class="popup-content" id="optionPopup">
         <button class="close-btn" onclick="closePopup()">&times;</button>
-        <h2 style="color: #ffa364; font-weight: 900;">Entrar como:</h2>
+        <h2 style="color: #ffa364; font-weight: bold;">Entrar como:</h2>
         <button class="login-btn" onclick="showLoginForm()">Login</button>
         <button class="login-btn" onclick="showRegisterForm()">Cadastro</button>
     </div>
@@ -56,7 +56,7 @@
     <!-- FORMULÁRIO DE LOGIN -->
     <div class="popup-content" id="loginForm" style="display: none;">
         <button class="close-btn" onclick="closePopup()">&times;</button>
-        <h2 style="color: #ffa364;">Login</h2>
+        <h2 style="color: #ffa364; font-weight: bold;">Login</h2>
         <form method="post" action="/projeto/">
             {% csrf_token %}
             <input type="email" name="email" placeholder="E-mail" required>
@@ -74,7 +74,7 @@
     <!-- FORMULÁRIO DE CADASTRO -->
     <div class="popup-content" id="registerForm" style="display: none;">
         <button class="close-btn" onclick="closePopup()">&times;</button>
-        <h2 style="color: #ff8c42;">Cadastro</h2>
+        <h2 style="color: #ffa364; font-weight: bold;">Cadastro</h2>
         <form method="post" action="/projeto/">
             {% csrf_token %}
             <input type="text" name="name" placeholder="Nome completo" required>
