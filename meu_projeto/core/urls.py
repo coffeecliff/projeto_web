@@ -3,5 +3,5 @@ from .views import homepage
 
 urlpatterns = [
     
-    path('', homepage, name = 'homepage')
+    path('core/', homepage, name = 'homepage')
 ]
