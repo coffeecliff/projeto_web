@@ -395,8 +395,8 @@ header {
     width: 100%;
     padding: 12px;
     background: #ffa364;
-    color: #a3f5b7;
-    font-weight: bold;
+    color: white;
+    font-weight: 800;
     border: none;
     border-radius: 12px;
     cursor: pointer;
