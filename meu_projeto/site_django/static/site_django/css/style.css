@@ -367,7 +367,7 @@ header {
 }
 
 .popup-content {
-    background: #4c9b5f;
+    background: linear-gradient(145deg, #a7dbab, #92caa0);
     border-radius: 11px;
     padding: 30px 25px;
     width: 350px;
