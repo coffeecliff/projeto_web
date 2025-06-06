@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     link.setAttribute("href", "javascript:void(0);");
                 }
 
-                // Inserção do HTML incluindo o popup de descrição com fade
                 link.innerHTML = `
                     <img src="${jogo.imagem_url}" alt="${jogo.nome}" class="background-img">
                     <div class="game-title">${jogo.nome}</div>
@@ -40,24 +39,24 @@ document.addEventListener("DOMContentLoaded", function () {
                     <a href="#" target="_blank" class="game-button">Jogar Agora</a>
                 `;
 
-                // Lógica de hover com delay e fade-in
+                // Hover com fade
                 let hoverTimeout;
-            const popup = link.querySelector(".game-description-popup");
+                const popup = link.querySelector(".game-description-popup");
 
-            link.addEventListener("mouseenter", () => {
-                hoverTimeout = setTimeout(() => {
-                    popup.style.opacity = "1";
-                }, 500);
-            });
+                link.addEventListener("mouseenter", () => {
+                    hoverTimeout = setTimeout(() => {
+                        popup.style.opacity = "1";
+                    }, 500);
+                });
 
-            link.addEventListener("mouseleave", () => {
-                clearTimeout(hoverTimeout);
-                popup.style.opacity = "0";
-            });
+                link.addEventListener("mouseleave", () => {
+                    clearTimeout(hoverTimeout);
+                    popup.style.opacity = "0";
+                });
+
                 gamesContainer.appendChild(link);
             });
 
-            // Atualiza a variável games para filtro posterior
             games = document.querySelectorAll(".game-item");
             filterGames();
         })
@@ -65,19 +64,15 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Erro ao buscar os jogos:", error);
         });
 
-
     // Filtro por categoria
     buttons.forEach(button => {
         button.addEventListener("click", function () {
             currentCategory = this.getAttribute("data-category");
             categoryTitle.textContent = currentCategory;
-            searchInput.value = ""; // Limpa a pesquisa ao mudar a categoria
+            searchInput.value = "";
             filterGames();
         });
     });
-
-    
-
 
     const noResultsMessage = document.createElement("p");
     noResultsMessage.id = "no-results";
@@ -86,9 +81,9 @@ document.addEventListener("DOMContentLoaded", function () {
     noResultsMessage.style.textAlign = "center";
     noResultsMessage.style.fontSize = "2.5rem";
     noResultsMessage.style.color = "#ff8c42";
-    noResultsMessage.style.width = "400%";
+    noResultsMessage.style.width = "100%";
     noResultsMessage.style.marginTop = "20px";
-    document.querySelector(".games-grid").appendChild(noResultsMessage);
+    gamesContainer.appendChild(noResultsMessage);
 
     // Filtro por busca
     searchInput.addEventListener("input", function () {
@@ -119,38 +114,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // === FADE-OUT DAS MENSAGENS DE FEEDBACK ===
     const mensagens = document.querySelectorAll(".mensagem-popup");
-
-    // Aplica fade-out após 3 segundos
     setTimeout(() => {
         mensagens.forEach(msg => {
             msg.classList.add("fade-out");
-
-            // Após o fade, remove da tela
             setTimeout(() => {
                 msg.style.display = "none";
-            }, 1000); // tempo do fade (1s)
+            }, 1000);
         });
-    }, 3000); // espera 3s antes de começar a desaparecer
+    }, 3000);
 
-    // === NOVA LÓGICA DOS POPUPS ===
+    // === POPUPS DE LOGIN/REGISTRO ===
     const userIcon = document.getElementById("userIcon");
     const popupOverlay = document.getElementById("popupOverlay");
     const optionPopup = document.getElementById("optionPopup");
     const loginForm = document.getElementById("loginForm");
     const registerForm = document.getElementById("registerForm");
 
-    // Função de fechar popup e limpar campos
-    function closePopup() {
+    function closePopupOverlay() {
         popupOverlay.style.display = "none";
-
-        // Limpa todos os inputs dentro dos popups
         const inputs = popupOverlay.querySelectorAll("input");
-        inputs.forEach(input => {
-            input.value = "";
-        });
+        inputs.forEach(input => input.value = "");
     }
 
-    // Clique no ícone do usuário
     userIcon.addEventListener("click", () => {
         popupOverlay.style.display = "flex";
         optionPopup.style.display = "block";
@@ -158,14 +143,12 @@ document.addEventListener("DOMContentLoaded", function () {
         registerForm.style.display = "none";
     });
 
-    // Fecha ao clicar fora
     window.addEventListener("click", (e) => {
         if (e.target === popupOverlay) {
-            closePopup();
+            closePopupOverlay();
         }
     });
 
-    // Funções para abrir cada popup
     window.showLoginForm = () => {
         optionPopup.style.display = "none";
         loginForm.style.display = "block";
@@ -185,33 +168,16 @@ document.addEventListener("DOMContentLoaded", function () {
         registerForm.style.display = "none";
     };
 
-
-
-
-    
-// Função para mostrar o popup
-function showPopup() {
-    const popup = document.getElementById('popupOverlay');
-    popup.classList.add('active');
-}
-
-// Função para fechar o popup
-function closePopup() {
-    const popup = document.getElementById('popupOverlay');
-    popup.classList.remove('active');
-}
-
-// Função para exibir o botão de "scroll to top"
-function toggleScrollToTopButton() {
-    const scrollButton = document.querySelector('.scroll-to-top');
-    if (window.scrollY > 200) {
-        scrollButton.style.display = 'block';
-    } else {
-        scrollButton.style.display = 'none';
+    // === SCROLL TO TOP ===
+    function toggleScrollToTopButton() {
+        const scrollButton = document.querySelector('.scroll-to-top');
+        if (window.scrollY > 200) {
+            scrollButton.style.display = 'block';
+        } else {
+            scrollButton.style.display = 'none';
+        }
     }
-}
 
-    // Função para scroll suave até o topo
     function scrollToTop() {
         window.scrollTo({
             top: 0,
@@ -219,17 +185,22 @@ function toggleScrollToTopButton() {
         });
     }
 
-    // Adiciona o evento para o botão de "scroll to top"
     document.querySelector('.scroll-to-top').addEventListener('click', scrollToTop);
-
-    // Evento de fechamento do popup (ao clicar no botão de fechar)
-    document.querySelector('.close-btn').addEventListener('click', closePopup);
-
-    // Evento para quando o scroll da página for feito
     window.addEventListener('scroll', toggleScrollToTopButton);
 
-    // Exemplo de como ativar o popup após um evento (como um clique em um botão de login)
-    document.querySelector('.login-btn').addEventListener('click', () => {
-        showPopup();
-    });
+    // Botão login dentro do popup
+    const loginBtn = document.querySelector('.login-btn');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            popupOverlay.classList.add('active');
+        });
+    }
+
+    // Botão de fechar popup (se existir)
+    const closeBtn = document.querySelector('.close-btn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            popupOverlay.classList.remove('active');
+        });
+    }
 });

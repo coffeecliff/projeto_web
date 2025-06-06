@@ -46,8 +46,8 @@ def api_jogos(request):
     data = [{
         'nome': jogo.nome,
         'descricao': jogo.descricao,
-        'categoria': jogo.categoria.upper(),
+        'categorias': [c.nome.upper() for c in jogo.categorias.all()],
         'imagem_url': jogo.imagem.url,
-        'link_url': jogo.link if jogo.link else "",
+        'link_url': jogo.link or "",
     } for jogo in jogos]
     return JsonResponse(data, safe=False)

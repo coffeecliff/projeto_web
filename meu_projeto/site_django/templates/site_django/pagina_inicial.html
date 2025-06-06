@@ -190,7 +190,7 @@
         <div class="main-content">
             <div class="games-grid" id="games-container">
                 {% for jogo in jogos %}
-                <div class="game-item" data-category="{{ jogo.categoria }}">
+                <div class="game-item" data-category="{{ jogo.categorias.all|join:',' }}">
                     <img src="{{ jogo.imagem.url }}" alt="{{ jogo.nome }}" class="background-img">
                     <div class="game-title">{{ jogo.nome }}</div>
                     <p class="game-description-popup" style="display:none;">{{ jogo.descricao }}</p>
