@@ -57,7 +57,7 @@
     <div class="popup-content" id="loginForm" style="display: none;">
         <button class="close-btn" onclick="closePopup()">&times;</button>
         <h2 style="color: #ffa364; font-weight: bold;">Login</h2>
-        <form method="post" action="/projeto/">
+        <form method="post" action="/">
             {% csrf_token %}
             <input type="email" name="email" placeholder="E-mail" required>
             <input type="password" name="password" placeholder="Senha" required>
@@ -75,7 +75,7 @@
     <div class="popup-content" id="registerForm" style="display: none;">
         <button class="close-btn" onclick="closePopup()">&times;</button>
         <h2 style="color: #ffa364; font-weight: bold;">Cadastro</h2>
-        <form method="post" action="/projeto/">
+        <form method="post" action="/">
             {% csrf_token %}
             <input type="text" name="name" placeholder="Nome completo" required>
             <input type="email" name="email" placeholder="E-mail" required>
