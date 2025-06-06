@@ -13,7 +13,7 @@ def site_django(request):
             nome = request.POST.get('nome')
             email = request.POST.get('email')
             password = request.POST.get('password')
-            telefone = request.POST.get('telefone')
+            telefone = request.POST.get('telefone') or 'Sem telefone'
 
             if password and email:
                 Cliente.objects.create(
