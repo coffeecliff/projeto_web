@@ -139,11 +139,11 @@ header {
 
 .user-label {
     margin-top: 4px;
-    color: #ffffff;
+    color: white;
     font-size: 0.85rem;
     font-weight: bold;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.6); /* opcional: fundo para contraste */
+    background-color: #ffa364 (219, 233, 93, 0.733); /* opcional: fundo para contraste */
     padding: 2px 6px;
     border-radius: 4px;
 }
