@@ -16,13 +16,14 @@ def site_django(request):
             telefone = request.POST.get('telefone') or 'Sem telefone'
 
             if password and email:
-                Cliente.objects.create(
+                novo_cliente = Cliente.objects.create(
                     nome=nome,
                     email=email,
                     password=password,
                     telefone=telefone
                 )
                 sucesso = True
+                usuario_logado_nome = novo_cliente.nome  # Auto-login após cadastro
 
         elif 'email' in request.POST and 'password' in request.POST:  # Login
             email = request.POST.get('email')
