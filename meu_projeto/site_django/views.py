@@ -6,14 +6,10 @@ from cadastro_jogos.models import Jogo  # Importando o modelo de Jogo
 def site_django(request):
     sucesso = False
     erro_login = False
-    usuario_logado_nome = request.session.get('usuario_logado_nome')
+    usuario_logado_nome = None
 
-    # Verifica se o usuário quer deslogar
     if request.method == 'POST':
-        if 'logout' in request.POST:
-            request.session.flush()  # Limpa todos os dados da sessão
-            usuario_logado_nome = None
-        elif 'nome' in request.POST:  # Cadastro
+        if 'nome' in request.POST:  # Cadastro
             nome = request.POST.get('nome')
             email = request.POST.get('email')
             password = request.POST.get('password')
@@ -27,8 +23,8 @@ def site_django(request):
                     telefone=telefone
                 )
                 sucesso = True
-                request.session['usuario_logado_nome'] = novo_cliente.nome
-                usuario_logado_nome = novo_cliente.nome
+                usuario_logado_nome = novo_cliente.nome  # Auto-login após cadastro
+
         elif 'email' in request.POST and 'password' in request.POST:  # Login
             email = request.POST.get('email')
             password = request.POST.get('password')
@@ -36,7 +32,6 @@ def site_django(request):
             try:
                 cliente = Cliente.objects.get(email=email, password=password)
                 usuario_logado_nome = cliente.nome
-                request.session['usuario_logado_nome'] = cliente.nome
             except Cliente.DoesNotExist:
                 erro_login = True
 
@@ -46,7 +41,6 @@ def site_django(request):
         'erro_login': erro_login,
         'usuario_logado_nome': usuario_logado_nome
     })
-
 
 def api_jogos(request):
     jogos = Jogo.objects.all()

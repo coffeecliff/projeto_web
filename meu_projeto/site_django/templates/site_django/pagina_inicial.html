@@ -57,12 +57,7 @@
         <h2 style="color: #ffa364; font-weight: bold;">Entrar como:</h2>
         <button class="login-btn" onclick="showLoginForm()">Login</button>
         <button class="login-btn" onclick="showRegisterForm()">Cadastro</button>
-        <!-- Novo botão de Logout -->
-        <form method="post" action="">
-            {% csrf_token %}
-            <input type="hidden" name="logout" value="1">
-            <button type="submit" class="login-btn" style="background-color: #ff6666;">Logout</button>
-        </form>
+        
     </div>
 
     <!-- FORMULÁRIO DE LOGIN -->
