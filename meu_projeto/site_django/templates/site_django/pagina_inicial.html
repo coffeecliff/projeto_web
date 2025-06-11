@@ -49,7 +49,7 @@
             {% endif %}
         </div>
 
-        <!-- CAMADA ESCURA DO FUNDO -->
+<!-- CAMADA ESCURA DO FUNDO -->
 <div id="popupOverlay" class="popup" style="display: none;">
     <!-- CAIXA COM AS OPÇÕES LOGIN OU CADASTRO -->
     <div class="popup-content" id="optionPopup">
@@ -94,14 +94,6 @@
             Já tem uma conta?
             <a href="javascript:void(0);" onclick="showLoginForm()" style="color: #ff8c42; font-weight: bold; text-decoration: none;">Login</a>
         </p>
-
-        {% if usuario_logado_nome %}
-        <form method="post" action="" style="margin-top: 25px;">
-            {% csrf_token %}
-            <input type="hidden" name="logout" value="1">
-            <button type="submit" class="login-btn" style="background-color: #d9534f;">Sair da Conta</button>
-        </form>
-        {% endif %}
     </div>
 </div>
 
