@@ -44,11 +44,6 @@
 
             {% if usuario_logado_nome %}
                 <div class="user-label">{{ usuario_logado_nome }}</div>
-                <form method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <input type="hidden" name="logout" value="1">
-                    <button type="submit" class="login-btn" style="margin-left: 10px;">Sair</button>
-                </form>
             {% else %}
                 <div class="user-label">Entrar</div>
             {% endif %}
@@ -99,6 +94,14 @@
             Já tem uma conta?
             <a href="javascript:void(0);" onclick="showLoginForm()" style="color: #ff8c42; font-weight: bold; text-decoration: none;">Login</a>
         </p>
+
+        {% if usuario_logado_nome %}
+        <form method="post" action="" style="margin-top: 25px;">
+            {% csrf_token %}
+            <input type="hidden" name="logout" value="1">
+            <button type="submit" class="login-btn" style="background-color: #d9534f;">Sair da Conta</button>
+        </form>
+        {% endif %}
     </div>
 </div>
 
