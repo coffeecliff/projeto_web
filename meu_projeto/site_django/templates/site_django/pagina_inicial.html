@@ -44,6 +44,11 @@
 
             {% if usuario_logado_nome %}
                 <div class="user-label">{{ usuario_logado_nome }}</div>
+                <form method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="logout" value="1">
+                    <button type="submit" class="login-btn" style="margin-left: 10px;">Sair</button>
+                </form>
             {% else %}
                 <div class="user-label">Entrar</div>
             {% endif %}
