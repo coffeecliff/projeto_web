@@ -77,32 +77,24 @@
         </p>
     </div>
 
-<!-- FORMULÁRIO DE CADASTRO -->
-<div class="popup-content" id="registerForm" style="display: none;">
-    <button class="close-btn" onclick="closePopup()">&times;</button>
-    <h2 style="color: #ffa364; font-weight: bold;">Cadastro</h2>
-    <form method="post" action="">
-        {% csrf_token %}
-        <input type="text" name="nome" placeholder="Nome completo" required>
-        <input type="email" name="email" placeholder="E-mail" required>
-        <input type="password" name="password" placeholder="Senha" required>
-        <input type="text" name="telefone" placeholder="Telefone (opcional)">
-        <button type="submit" class="login-btn">Cadastrar</button>
-    </form>
+    <!-- FORMULÁRIO DE CADASTRO -->
+    <div class="popup-content" id="registerForm" style="display: none;">
+        <button class="close-btn" onclick="closePopup()">&times;</button>
+        <h2 style="color: #ffa364; font-weight: bold;">Cadastro</h2>
+        <form method="post" action="">
+            {% csrf_token %}
+            <input type="text" name="nome" placeholder="Nome completo" required>
+            <input type="email" name="email" placeholder="E-mail" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <input type="text" name="telefone" placeholder="Telefone (opcional)">
+            <button type="submit" class="login-btn">Cadastrar</button>
+        </form>
 
-    <p style="margin-top: 20px; font-size: 0.9rem; color: #767676;">
-        Já tem uma conta?
-        <a href="javascript:void(0);" onclick="showLoginForm()" style="color: #ff8c42; font-weight: bold; text-decoration: none;">Login</a>
-    </p>
-
-    {% if usuario_logado_nome %}
-    <form method="post" action="" style="margin-top: 25px;">
-        {% csrf_token %}
-        <input type="hidden" name="logout" value="1">
-        <button type="submit" class="login-btn" style="background-color: #d9534f;">Sair da Conta</button>
-    </form>
-    {% endif %}
-</div>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: #767676;">
+            Já tem uma conta?
+            <a href="javascript:void(0);" onclick="showLoginForm()" style="color: #ff8c42; font-weight: bold; text-decoration: none;">Login</a>
+        </p>
+    </div>
 </div>
 
 
