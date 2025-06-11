@@ -46,3 +46,15 @@ def site_django(request):
         'erro_login': erro_login,
         'usuario_logado_nome': usuario_logado_nome
     })
+
+
+def api_jogos(request):
+    jogos = Jogo.objects.all()
+    data = [{
+        'nome': jogo.nome,
+        'descricao': jogo.descricao,
+        'categoria': jogo.categoria.upper(),
+        'imagem_url': jogo.imagem.url,
+        'link_url': jogo.link if jogo.link else "",
+    } for jogo in jogos]
+    return JsonResponse(data, safe=False)
