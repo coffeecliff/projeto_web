@@ -41,6 +41,12 @@
             <button class="icon-button" id="userIcon">
                 <img class="overlay-img" src="{% static 'site_django/imagens/usericon.png' %}" alt="User Icon">
             </button>
+
+            {% if usuario_logado_nome %}
+                <div class="user-label">{{ usuario_logado_nome }}</div>
+            {% else %}
+                <div class="user-label">Entrar</div>
+            {% endif %}
         </div>
 
         <!-- CAMADA ESCURA DO FUNDO -->
